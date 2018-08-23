@@ -1,0 +1,61 @@
+    <header>
+		<div class="head">
+			<div class="logo">
+				<font style="float:left;margin-left:5px;font-size:.42rem;margin-top:3px;">{$maccms.site_name}</font>
+			</div>
+			<a class="pull-right btn"  tapmode onclick="openDialog('text')">
+		        <span class="iconfont icon-creative"></span>
+		    </a>
+			<a class="pull-right btn" href="{:mac_url('label/top')}" tapmode onclick="showDefault('loading')">
+		        <span class="iconfont icon-hot"></span>
+		   	</a>
+		    <a class="pull-right btn" href="javascript:;" onclick="openSearch()">
+		        <span class="iconfont icon-search"></span>
+		    </a>
+		</div>
+	</header>
+	<div class="headernav">
+		<div class="nav-wrap">
+			<div class="shadow-l"></div>
+			<div class="shadow-r"></div>
+			<div id="header-nav" class="wrap">
+				<ul class="swiper-wrapper clearfix">
+					<li class="swiper-slide {if condition="$maccms.aid eq 1"}active{/if}"><a href="{$maccms.path}" tapmode onclick="showDefault('loading')">首页</a></li>
+{maccms:type ids="parent" order="asc" by="sort"}
+                    <li class="swiper-slide {if condition="$obj.type_id eq $vo.type_id"}active{/if}" tapmode onclick="showDefault('loading')"><a href="{:mac_url_type($vo)}">{$vo.type_name}</a></li>
+{/maccms:type}
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--搜索布局-->
+<section class="searchPop">
+		<div class="searchCon">
+		    <a class="pull-left btn" href="javascript:;" onclick="cancelSearch()">
+			<span class="iconfont icon-back" style="font-size: .4rem;color: #fff;top: 0;margin-left: .3rem;line-height: .88rem;"></span>
+		</a>
+			<div class="sSearchInput" style="margin-left: .8rem;">
+				<form class="search-form" method="post" target="_self" action="{:mac_url('vod/search')}">
+			   		<input class="searchInput" name="wd" type="search" autocomplete="off" placeholder="输入影片片名或演员名称。" >  
+		      	</form>
+			</div>
+			<input type="submit"  value="" style="display: none!important;"><a href="javascript:" title="搜索" onClick="$('.search-form').submit();"><span class="cancelInput">搜索</span></a>
+		</div>
+<!--搜索标签-->
+    <section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">热门搜索</span>
+			</div>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-tags">
+				<div class="search-tags">
+{maccms:foreach name=":explode(',',$maccms.search_hot)" id="vo2" key="key2"}
+						<a href="{:mac_url('vod/search',['wd'=>$vo2])}" title="{$vo2}"><span class="badge ">{$vo2}</span></a>
+{/maccms:foreach}
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

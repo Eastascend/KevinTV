@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimal-ui">
+<title>{$obj.vod_name}详情介绍-{$obj.vod_name}在线观看-{$obj.vod_name}迅雷下载 - {$maccms.site_name}</title>
+<meta name="keywords" content="{$obj.vod_name}在线收看,{$obj.vod_name}迅雷下载" />
+<meta name="description" content="{$obj.vod_name}剧情:{$obj.vod_blurb}" />  
+<meta name="author" content="muqiao">
+<link rel="shortcut icon" href="{$maccms.path}favicon.ico">
+{include file="public/include"}
+<script>var qrcode_wx='{$maccms.path_tpl}images/wx.png';var qrcode_alipay='{$maccms.path_tpl}images/zfb.png';</script>
+</head>
+<body>
+<div class="channel">
+    <header>
+		<div class="head">
+		<a class="pull-left btn" onclick="back();">
+			<span class="iconfont icon-back"></span>
+		</a>
+		<font style="float: left;margin-left:5px;font-size:.38rem;line-height:.85rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:3rem;">{$obj.vod_name}</font>
+			<a class="pull-right btn" tapmode onclick="openDialog('text')">
+		        <span class="iconfont icon-creative"></span>
+		    </a>
+			<a class="pull-right btn" href="{:mac_url('label/top')}" tapmode onclick="showDefault('loading')">
+		        <span class="iconfont icon-hot"></span>
+		   	</a>
+			<a href="javascript:void(0)" class="pull-right btn mac_ulog" data-type="2" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}">
+		        <span class="iconfont icon-like"></span>
+		    </a>
+		</div>
+	</header>
+<!--影片详情-->
+	<div class="detail">
+		<div class="detail-wrap">
+			<div class="detail-cover blur" data-echo="{$obj.vod_pic|mac_url_img}"></div>
+			<div class="detail-img">
+				<img src="{$obj.vod_pic|mac_url_img}" alt="{$obj.vod_name}">
+			</div>
+			<div class="detail-media">
+				<h1 class="media-title ellipsis-2">{$obj.vod_name}</h1>
+				<ul class="desc" style="color:#fff;">
+					<li>导演：{$obj.vod_director|mac_url_create='director'}</li>
+					<li>主演：{$obj.vod_actor|mac_url_create='actor'}</li>
+					<li>年代：{$obj.vod_year}</li>
+					<li>评分：{$obj.vod_score}</li>
+				</ul>
+				<div class="media-btn">
+				  <a href="{:mac_url_vod_play($obj,['sid'=>1,'nid'=>1])}" class="btn" tapmode onclick="showDefault('loading')">立即播放</a>
+				  <a tapmode onclick="openDialog('shang')" class="btn">打赏</a></div>
+			</div>
+		</div>
+	</div>
+	<!--影片简介-->
+	<section class="mod clearfix">
+		<div class="detail-intro _js_detail_area">
+			<p class="detail-intro-txt ellipsis-2">{$obj.vod_content|mac_filter_html}</p>
+			<div class="more"><i class="iconfont icon-unfold"></i></div>
+		</div>
+	</section>
+  <div class="mod-main clearfix"><marquee  align="left" height="36" width="auto" behavior="scroll"  direction="left"  hspace="2" vspace="0"
+        loop="-1" scrollamount="10" scrolldelay="200"
+        onMouseOut="this.start()" onMouseOver="this.stop()">
+<a class="change"><span class="iconfont icon-location"></span>&nbsp;目前网站提供的视频有多种片源，如不能播放，请尝试切换片源，所有片源均无法播放请在下方反馈或留言！</a>
+<ul>
+</marquee>
+</div>
+	<!--播放源-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>片源选择</span>
+					<a class="change"><span class="iconfont icon-location"></span>&nbsp可以左右滑动哦</a>
+			</div>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<div class="filmSources" id="playPathlist-1">
+						<ul class="swiper-wrapper clearfix" >
+					{maccms:foreach name="obj.vod_play_list" id="vo"}
+			     	<li  class="swiper-slide {eq name="$key" value="1"}active{/eq}" href="javascript:void(0);">{$vo.player_info.show}</li>{/maccms:foreach}
+						</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--选集播放-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>选集播放</span>
+			</div>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="filmSelectNum">
+				<div id="tabs-container-1" class="swiper-container">
+					<div class="swiper-wrapper">{maccms:foreach name="obj.vod_play_list" id="vo"}
+            <div class="playlist-slide swiper-slide" {eq name="$key" value="1"}style="display:block"{else/}style="display:none"{/eq}>
+              <div class="filmSelectWrap">
+				<ul>{maccms:foreach name="vo.urls" id="vo2" key="key2"}
+                  <li tapmode onclick="showDefault('loading')"><a data-episode="{$key2}" data-href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" rel="nofollow">{$vo2.name}</a></li>{/maccms:foreach}
+				</ul>
+              </div>
+            </div>{/maccms:foreach}
+				    </div>
+			    </div>
+		    </div>
+		</div>
+	</section>
+{notempty name="$obj.vod_down_from"}
+  <section class="mod margin-t-15">
+    <div class="mod-head clearfix">
+      <div class="mod-head-title"> <span class="mod-head-name">
+        <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;">
+          <use xlink:href="#icon-dong"></use>
+        </svg>
+        下载源选择</span> </div>
+    </div>
+    <div class="mod-main clearfix">
+      <div class="mod-row">
+        <div class="filmSources" id="playPathlist-2">
+			<ul class="swiper-wrapper clearfix" >{maccms:foreach name="obj.vod_down_list" id="vo"}
+				<li class="swiper-slide {eq name="$key" value="1"}active{/eq}" href="javascript:void(0);">{$vo.player_info.show}</li>{/maccms:foreach}
+			</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mod margin-t-15">
+    <div class="mod-head clearfix">
+      <div class="mod-head-title"> <span class="mod-head-name">
+        <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;">
+          <use xlink:href="#icon-dong"></use>
+        </svg>
+        选集下载</span> </div>
+    </div>
+    <div class="mod-main clearfix">
+      <div class="filmSelectNum">
+        <div id="tabs-container-2" class="swiper-container">
+          <div class="swiper-wrapper">{maccms:foreach name="obj.vod_down_list" id="vo"}
+            <div class="swiper-slide" {eq name="$key" value="1"}style="display:block"{else/}style="display:none"{/eq}>
+              <div class="filmSelectWrap">
+                <ul>{maccms:foreach name="vo.urls" id="vo2" key="key2"}
+					<li class="download" tapmode onclick="showDefault('loading')"><a data-episode="{$key2}" data-href="{$vo2.url}" href="{$vo2.url}" rel="nofollow">{$vo2.name}</a></li>{/maccms:foreach}
+				</ul>
+              </div>
+            </div>{/maccms:foreach}
+			</div>
+        </div>
+      </div>
+    </div>
+</section>
+{/notempty}
+		<!--留言评论-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>留言评论</span>
+			</div>
+		</div>
+		<div class="mod-main clearfix">
+<div class="mac_comment" id="mac_comment" data-id="{$obj.vod_id}" data-mid="{$maccms.mid}" ></div>
+<script>
+	$(function(){
+		MAC.Comment.Login = {$comment.login};
+		MAC.Comment.Verify = {$comment.verify};
+		MAC.Comment.Init();
+		MAC.Comment.Show(1);
+	});
+</script>
+		</div>
+	</section>
+	<!--猜你喜欢-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+			    <span class="mod-head-name"><svg class="icon" aria-hidden="true"style="font-size: 1.6rem;margin:0 0 0 -.1rem">
+                <use xlink:href="#icon-wodezhuifan"></use>
+                </svg>猜你喜欢</span>
+			</div>
+			<a class="change"><span class="iconfont icon-location"></span>&nbsp可以左右滑动哦</a>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<div class="videoSelectWrap" style="overflow: hidden;">
+					<ul class="video-list swiper-wrapper video-sScroll-list clearfix">
+					     {maccms:vod num="9" type="current" order="desc" by="rnd"}
+					    <li class="swiper-slide video-item" tapmode onclick="showDefault('loading')">
+							<a class="video-link" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+								<div class="_item-pic swiper-lazy" data-background="{$vo.vod_pic|mac_url_img}">
+								    <div class="video-tips red">{$vo.vod_version|mac_default='HD'}</div>
+									<div class="video-duration">{include file="public/serial1"}</div>
+								</div>
+								<div class="video-con">
+									<h2 class="video-con-tit ellipsis-1">{$vo.vod_name}</h2>
+								</div>
+							</a>
+						</li>{/maccms:vod}
+	                </ul>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<span style="display:none" class="mac_ulog_set" alt="设置内容页浏览记录" data-type="1" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+<span style="display:none" class="mac_history_set" alt="设置History历史记录" data-name="[{$obj.type.type_name}]{$obj.vod_name}" data-pic="{$obj.vod_pic|mac_url_img}"></span>
+{include file="public/foot"}
+</body>
+</html>

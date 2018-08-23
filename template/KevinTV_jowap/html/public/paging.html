@@ -1,0 +1,15 @@
+<section class="pag-warp clearfix" tapmode onclick="showDefault('loading')">
+{if condition="$__PAGING__.page_current eq 1"}
+<em>首页</em><em>上一页</em>
+{else /}
+<a target="_self" href="{$__PAGING__.page_url|mac_url_page=1}" class="pagelink_a">首页</a>
+<a target="_self" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_prev}" class="pagelink_a">上一页</a>
+{/if}
+<span class="pagenow">{$__PAGING__.page_current}</span>
+{if condition="$__PAGING__.page_current eq $__PAGING__.page_total"}
+<em>尾页</em><em>下一页</em>
+{else /}
+<a target="_self" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_next}" class="pagelink_a">下一页</a>&nbsp;
+<a target="_self" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_total}" class="pagelink_a">尾页</a>&nbsp;
+{/if}
+</section>

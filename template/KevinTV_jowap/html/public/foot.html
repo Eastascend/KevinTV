@@ -1,0 +1,13 @@
+<div id="_js_goTop" class="goTop"><i class="iconfont icon-fold"></i></div>
+<footer class="footer">
+	<div class="footerText">
+		<p>{$maccms.site_name} © 2015-2018</p>
+	</div>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261891361'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261891361%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</footer>
+<nav class="mnav">
+<a href="{$maccms.path}" {if condition="$maccms.aid eq 1"}class="active"{/if}><span class="iconfont icon-home" tapmode onclick="showDefault('loading')"></span><p>首页</p></a>
+{maccms:type ids="5" order="asc" by="sort"}<a href="{:mac_url_type($vo)}" {if condition="$obj.type_id eq $vo.type_id"}class="active"{/if}><span class="iconfont icon-copy" tapmode onclick="showDefault('loading')"></span><p>{$vo.type_name}</p></a>{/maccms:type}
+<a href="{:mac_url('label/live')}" {if condition="$maccms.aid eq 7"}class="active"{/if}><span class="iconfont icon-discover" tapmode onclick="showDefault('loading')"></span><p>直播</p></a>
+<a href="{:mac_url('user/login')}"><span class="iconfont icon-people" tapmode onclick="showDefault('loading')"></span><p>会员</p></a></nav>
+

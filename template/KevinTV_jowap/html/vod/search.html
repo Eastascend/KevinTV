@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimal-ui">
+<title>搜索{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}-{$maccms.site_name}-国内领先的在线视频网站·免VIP在线观看无广告高清视频</title>
+<meta name="keywords" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}-{$maccms.site_name},免费在线电影,{$maccms.site_name},视频网站,免VIP,免广告,高清,高清视频,高清视频观看,VIP会员,在线观看,电影,电视剧,综艺,最新电影,最新电视剧" />
+<meta name="description" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}-{$maccms.site_name},{$maccms.site_name}-国内领先的在线视频网站·平台用户可享受免VIP在线观看无广告高清视频,我们致力打造最优秀的最新影视,最新电视剧,最新综艺节目在线观看服务平台" />
+<meta name="author" content="muqiao">
+<link rel="shortcut icon" href="{$maccms.path}favicon.ico">
+{include file="public/include"}
+</head>
+<body>
+<div class="h-channel">
+  <section class="searchPop" style="display: block;position: relative;">
+    <div class="searchCon">
+	<a class="pull-left btn" href="javascript:;" onclick="back();">
+	<span class="iconfont icon-back" style="font-size: .4rem;color: #fff;top: 0;margin-left: .3rem;line-height:.88rem;"></span>
+	</a>
+      <div class="sSearchInput" style="margin-left: .8rem;">
+        <form class="search-form" method="post" target="_self" action="{:mac_url('vod/search')}">
+          <input name="wd" type="search" class="searchInput" placeholder="{$param.wd}" >
+        </form>
+      </div>
+      <input type="submit"  value="" style="display: none!important;">
+      <a href="javascript:" title="搜索" onClick="$('.search-form').submit();"><span class="cancelInput">搜索</span></a>
+	  </div>
+  </section>
+  <section>
+    <div class="mod margin-t-15">
+      <div class="detail detail-search">
+{maccms:vod num="20" paging="yes" pageurl="vod/search" order="desc" by="time"}
+        <div class="detail-wrap"> <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+          <div class="detail-img _item-lazy _item-pic" data-echo="{$vo.vod_pic|mac_url_img}"></div>
+          </a>
+          <div class="detail-media"> <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" tapmode onclick="showDefault('loading')">
+            <h1 class="media-title ellipsis-2">{$vo.vod_name}</h1>
+            </a>
+            <ul class="desc">
+              <li>{$vo.vod_year}</li>
+              <li class="ellipsis-1">主演：{$vo.vod_actor}</li>
+              <li class="ellipsis-2">简介：{$vo.vod_content|mac_filter_html}</li>
+            </ul>
+            <div class="media-btn"> <a href="{:mac_url_vod_detail($vo)}" class="btn" tapmode onclick="showDefault('loading')">查看详情</a> </div>
+          </div>
+        </div>
+{/maccms:vod}
+		</div>
+    </div>
+  </section>
+<section class="pag-warp clearfix" tapmode onclick="showDefault('loading')">
+{include file="public/paging"}
+</section>
+</div>
+{include file="public/foot"}
+</body>
+</html>

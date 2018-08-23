@@ -1,0 +1,137 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimal-ui">
+<title>KevinTV,2018最新电影,最新电视剧,电视剧大全,电视剧排行榜,最新好看的综艺 - {$maccms.site_name}</title>
+<meta name="keywords" content="{$maccms.site_keywords}" />
+<meta name="description" content="{$maccms.site_description}" />  
+<meta name="author" content="muqiao">
+<link rel="shortcut icon" href="{$maccms.path}favicon.ico">
+{include file="public/include"}
+</head>
+<body>
+<div class="channel">
+{include file="public/head"}
+<!--幻灯片 -->
+<section>
+		<div id="slider" class="slider swiper-container">
+			<div class="swiper-wrapper">
+{maccms:vod num="6" paging="no" type="all" level="9" order="desc" by="sort"}
+				<div class="swiper-slide ">
+					<a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" class="slider-link swiper-lazy" data-background="{$vo.vod_pic_slide|mac_url_img}" tapmode onclick="showDefault('loading')">
+						<div class="bottom">
+							<div class="sub_title">《{$vo.vod_name}》</div>
+						</div>
+					</a>
+				</div>
+{/maccms:vod}
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+</section>
+	<!--热播推荐-->
+	<section class="mod">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name"><svg class="icon" aria-hidden="true"style="font-size: 1.6rem;margin:0 -.1rem 0 -.1rem">
+           <use xlink:href="#icon-fanjutuijian"></use>
+        </svg>热播推荐</span>
+			</div>
+			<a href="{:mac_url('label/top')}" class="change" tapmode onclick="showDefault('loading')"><span class="iconfont icon-location"></span>&nbsp排行榜&nbsp<span class="iconfont icon-right"></span></a>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<ul class="video-list video-small-list clearfix">
+{maccms:vod num="6" type="1,2,3,4" level="8" order="desc" by="time"}
+				    <li class="video-item" tapmode onclick="showDefault('loading')"> <a class="video-link" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+						<div class="_item-pic _item-lazy" data-echo="{$vo.vod_pic_slide|mac_url_img}">
+						<div class="video-tips red">推荐</div>
+						<div class="video-duration">{include file="public/serial1"}</div>
+						</div>
+						<div class="video-con">
+						<h2 class="video-con-tit ellipsis-1">{$vo.vod_name}</h2>
+						<p class="video-con-subtitle ellipsis-1"><span style="color: rgb(153, 153, 153); font-family: Arial, microsoft yahei;font-size:14px;">{$vo.vod_content|mac_filter_html}</span><br />
+						</p>
+						</div>
+						</a>
+					</li>
+{/maccms:vod}
+				</ul>
+			</div>
+		</div>
+	</section>
+{maccms:type ids="1,2,3,4" order="asc" by="sort" id="vo5" key="key5"}
+	<section class="mod ">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name"><svg class="icon" aria-hidden="true">
+           <use xlink:href="{if condition="$vo5.type_id==1"}#icon-zhibo{elseif condition="$vo5.type_id==2"}#icon-dianshiju{elseif condition="$vo5.type_id==3"}#icon-guixu{else /}#icon-guochandonghuatuijian{/if}"></use>
+        </svg>热播{$vo5.type_name}</span>
+			</div>
+			<a href="{:mac_url_type($vo5)}" class="change" tapmode onclick="showDefault('loading')"><span class="iconfont icon-location"></span>&nbsp查看更多&nbsp<span class="iconfont icon-right"></span></a>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<ul class="video-list video-film-list clearfix">
+{maccms:vod num="6" type="'.$vo5['type_id'].'" order="desc" by="time" id="vo2" key="key2"}
+					<li class="video-item" tapmode onclick="showDefault('loading')">
+						<a class="video-link" href="{:mac_url_vod_detail($vo2)}" title="{$vo2.vod_name}">
+							<div class="_item-pic _item-lazy" data-echo="{$vo2.vod_pic|mac_url_img}">
+							    <div class="video-tips red">{$vo2.vod_version|mac_default='HD'}</div>
+								<div class="video-duration">{include file="public/serial"}</div>
+							</div>
+							<div class="video-con">
+								<h2 class="video-con-tit ellipsis-1">{$vo2.vod_name}</h2>
+							</div>
+						</a>
+					</li>
+{/maccms:vod}
+				</ul>
+			</div>
+		</div>
+	</section>
+{/maccms:type}
+    <!-- 资讯列表 -->
+	<section class="mod">
+		<div class="mod-head clearfix">{maccms:type parent="5" order="asc" by="sort" id="vo4" key="key4"}
+		    <div class="mod-head-title" {if condition="$key4%2==0"}style="float:right;margin-right:1.8rem;"{/if}>
+				<span class="mod-head-name">
+				<svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>热门{$vo4.type_name}</span>
+			</div>{/maccms:type}
+		</div>
+		<div class="mod-main clearfix">{maccms:type parent="5" order="asc" by="sort" id="vo5" key="key5"}
+			<div class="art-{if condition="$key%2==0"}l{else /}r{/if}">
+				<ul class="art-rank">
+{maccms:art num="6" type="'.$vo5['type_id'].'" order="desc" by="time" id="vo2" key="key2"}
+				      <li><span class="iconfont icon-evaluate"></span>
+                   <span class="art-tit"><a href="{:mac_url_art_detail($vo2)}" title="{$vo2.art_name}" tapmode="" onclick="showDefault(&#39;loading&#39;)">{$vo2.art_name}</a></span>
+                    </li>
+{/maccms:art}
+				</ul>
+			</div>{/maccms:type}
+		</div>
+	</section>
+</div>
+<section class="mod ">
+  <div class="mod-head clearfix">
+    <div class="mod-head-title"> <span class="mod-head-name">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-wodezhuifan"></use>
+      </svg>
+      友情链接</span> </div>
+    <a class="change"><span class="iconfont icon-location"></span>&nbsp;可以左右滑动</a> </div>
+  <div class="mod-main clearfix">
+    <div class="mod-row link-list">
+	<ul class="swiper-wrapper clearfix">{maccms:link type="font" order="asc" by="sort"}
+		<li class="swiper-slide"><a href="{$vo.link_url}" target="_blank">{$vo.link_name}</a></li>{/maccms:link}
+	</ul>
+    </div>
+  </div>
+</section>
+{include file="public/foot"}
+</body>
+</html>

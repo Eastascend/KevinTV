@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimal-ui">
+<title>{$obj.vod_name}-{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}在线播放,百度网盘,迅雷下载-{$maccms.site_name}_国内领先的在线视频网站·免VIP在线观看无广告高清视频</title>
+<meta name="keywords" content="{$obj.vod_name}-{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}在线观看,谈判官百度网盘,谈判官迅雷下载,{$maccms.site_name}_国内领先的在线视频网站·免VIP在线观看无广告高清视频" />
+<meta name="description" content="《{$obj.vod_name}-{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}》在线观看,《{$obj.vod_name}-{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}》高清资源迅雷下载,{$maccms.site_name}_国内领先的在线视频网站·免VIP在线观看无广告高清视频剧情:{$obj.art_blurb}" />
+<meta name="author" content="muqiao">
+<link rel="shortcut icon" href="{$maccms.path}favicon.ico">
+{include file="public/include"}
+</head>
+<body>
+<div class="channel">
+    <header>
+		<div class="head">
+		<a class="pull-left btn" onclick="back();">
+			<span class="iconfont icon-back"></span>
+		</a>
+		<font style="float: left;margin-left:5px;font-size:.38rem;line-height:.85rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:3rem;">{$obj.vod_name}</font>
+		    <a class="pull-right btn"  tapmode onclick="openDialog('text')">
+		        <span class="iconfont icon-creative"></span>
+		    </a>
+			<a class="pull-right btn" href="{:mac_url('label/top')}" tapmode onclick="showDefault('loading')">
+		        <span class="iconfont icon-hot"></span>
+		   	</a>
+			<a class="pull-right btn mac_ulog" href="javascript:void(0)" data-type="2" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}">
+		        <span class="iconfont icon-like"></span>
+		    </a>
+		</div>
+	</header>
+<!--播放器-->
+    <div class="vod-tips" id="tips-1" >
+	    <span class="iconfont icon-info"></span>
+	    <div class="vod-tips-title ellipsis-2">正在播放：{$obj.vod_name}--{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</div>
+	    <span class="iconfont icon-close" tapmode onclick="closeTips()"></span>
+	</div>
+	<section class="aplayer">{$player_data}{$player_js}</section>
+<!--影片描述-->
+	<section class="filmDes">
+		<div class="f_describe_Warp">
+			<h1 class="f_describe_title">{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</h1>
+			<a href="javascript:;" tapmode onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href)">反馈报错</a>
+		</div>
+		<div class="detail-intro _js_detail_area">
+			<p class="detail-intro-txt ellipsis-2">{$obj.vod_content|mac_filter_html}</p>
+			<div class="more"><i class="iconfont icon-unfold"></i></div>
+		</div>
+	</section>
+		<div class="mod-main clearfix"><marquee  align="left" height="36" width="auto" behavior="scroll"  direction="left"  hspace="2" vspace="0"
+        loop="-1" scrollamount="10" scrolldelay="200"
+        onMouseOut="this.start()" onMouseOver="this.stop()">
+		<a class="change"><span class="iconfont icon-location"></span>&nbsp;目前网站提供的视频有多种片源，如不能播放，请尝试切换片源，所有片源均无法播放请在下方反馈或留言！</a>
+		<ul>
+		</marquee>
+		</div>
+<!--播放源-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>片源选择 </span>
+			</div>
+			<a class="change"><span class="iconfont icon-location"></span>&nbsp;可以左右滑动切换播放地址</a>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<div class="filmSources" id="playPathlist-1">
+						<ul class="swiper-wrapper clearfix" >{maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+			     	  	<li class="swiper-slide {if condition="$param.sid eq $key"}active{/if}" href="javascript:void(0);">{$vo.player_info.show}</li>{/maccms:foreach}
+						</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+<!--选集-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>选集观看</span>
+			</div>
+		</div>
+    <div class="mod-main clearfix">
+      <div class="filmSelectNum">
+        <div id="tabs-container-1" class="swiper-container">
+          <div class="swiper-wrapper">{maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+            <div class="playlist-slide swiper-slide" {if condition="$param.sid eq $key"}style="display:block"{else /}style="display:none"{/if}>
+              <div class="filmSelectWrap">
+                <ul>{maccms:foreach name="vo.urls" id="vo2" key="key2"}
+                  <li {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}class="active"{/if} tapmode onclick="showDefault('loading')"><a data-episode="{$key2}" data-href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" rel="nofollow">{$vo2.name}</a></li>{/maccms:foreach}
+				  </ul>
+              </div>
+            </div>{/maccms:foreach}
+		  </div>
+        </div>
+      </div>
+    </div>
+	</section>
+	<!--留言评论-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name">
+				    <svg class="icon" aria-hidden="true" style="font-size: 1.4rem;"><use xlink:href="#icon-dong"></use></svg>留言评论</span>
+			</div>
+		</div>
+		<div class="mod-main clearfix">
+<div class="mac_comment" id="mac_comment" data-id="{$obj.vod_id}" data-mid="{$maccms.mid}" ></div>
+<script>
+	$(function(){
+		MAC.Comment.Login = {$comment.login};
+		MAC.Comment.Verify = {$comment.verify};
+		MAC.Comment.Init();
+		MAC.Comment.Show(1);
+	});
+</script>
+		</div>
+	</section>
+<div class="bdsharebuttonbox">
+<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></br>
+<!--猜你喜欢-->
+	<section class="mod margin-t-15">
+		<div class="mod-head clearfix">
+			<div class="mod-head-title">
+				<span class="mod-head-name"><svg class="icon" aria-hidden="true"style="font-size: 1.6rem;margin:0 0 0 -.1rem">
+				<use xlink:href="#icon-wodezhuifan"></use>
+				</svg>猜你喜欢</span>
+			</div>
+			<a class="change"><span class="iconfont icon-location"></span>&nbsp可以左右滑动哦</a>
+		</div>
+		<div class="mod-main clearfix">
+			<div class="mod-row">
+				<div class="videoSelectWrap" style="overflow: hidden;">
+					<ul class="video-list swiper-wrapper video-sScroll-list clearfix">
+					{maccms:vod num="9" type="current" order="desc" by="hits_month"}
+					    <li class="swiper-slide video-item" tapmode onclick="showDefault('loading')">
+							<a class="video-link" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+								<div class="_item-pic swiper-lazy" data-background="{$vo.vod_pic|mac_url_img}">
+								    <div class="video-tips red">{$vo.vod_version|mac_default='HD'}</div>
+									<div class="video-duration">{include file="public/serial1"}</div>
+								</div>
+								<div class="video-con">
+									<h2 class="video-con-tit ellipsis-1">{$vo.vod_name}</h2>
+								</div>
+							</a>
+						</li>{/maccms:vod}
+	                </ul>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<span style="display:none" class="mac_ulog_set" alt="设置播放页浏览记录" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+{include file="public/foot"}
+</body>
+</html>
